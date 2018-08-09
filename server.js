@@ -21,8 +21,9 @@ app.use(function(req, res, next) {
 }); 
 
 app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }));
 
-mongoose.connect(DB_PATH);
+//mongoose.connect(DB_PATH);
 
 
 function pullParams(queryObj,pattern) {
@@ -49,6 +50,9 @@ const getRequest = (url, data, headers) => {
 }
 
 app.all('/', (req,res) => {
+
+	req.body=JSON.parse(req.body.a);
+
 	let query = '';
 	if(req.method !== "POST") {
 		query = queryString.parse(req.url.substring(2));
@@ -60,6 +64,9 @@ app.all('/', (req,res) => {
 	if(!query.xmlToJSON) {
 		query.xmlToJSON = false;
 	}
+
+	
+
 	if(query.reqUrl) {
 
 		var url = query.reqUrl;
@@ -117,7 +124,7 @@ app.all('/', (req,res) => {
 				request.post({
 						url: url,
 						headers: Object.assign(headers,{
-							'Content-Type': 'application/x-www-form-urlencoded',
+							//'Content-Type': 'application/x-www-form-urlencoded',
 							'Accept':'application/json'
 						}),
 						body: JSON.stringify(params)
