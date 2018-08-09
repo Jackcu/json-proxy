@@ -1,3 +1,40 @@
+# JSON Post 跨域转发
+```
+npm intall 
+npm run start
+```
+```
+
+
+let data1=JSON.stringify({
+    reqUrl: 'http://host:port/order/list/v1',
+    params:{
+      "username": "user01",
+      "userId": "1",
+      "userType": "",
+      "token": "token_value",
+      "pageIndex": 1,
+      "pageSize": 10
+    },
+    proxyHeaders: {
+      'Content-Type': 'application/json' 
+    },
+    xmlToJSON: false,
+    useCache: false
+  });
+
+$.ajax({
+  url: 'http://127.0.0.1:4500',
+  dataType: 'json',
+  method: 'POST',
+  data: {a:data1}
+}).then(function(res) {
+  console.log(res)
+});
+
+```
+
+
 # Simple Proxy Server
 
 [![CircleCI](https://img.shields.io/circleci/project/HackerYou/json-proxy.svg?style=flat-square)](https://circleci.com/gh/hackeryou/jsonproxy)
